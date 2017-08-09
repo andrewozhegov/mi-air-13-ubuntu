@@ -74,9 +74,8 @@ sudo powetop
 installing and configuring the TLP I will describe in another article
 ```
 * The use of **Nvidia Optimus Technology** also has a positive effect on energy saving
-```
+
 [Install and configurate Bumblebee](https://github.com/andrewozhegov/mi-air-13-ubuntu/blob/master/bumblebees.md)
-```
 ***
 ### Some features too
 * Mi Air 13 has 8 gb of RAM, and you can safely disable the swap partition
