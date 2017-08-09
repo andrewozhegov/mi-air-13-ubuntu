@@ -1,5 +1,5 @@
 # Install Ubuntu and Powersave settings
-This article contains instructions for installing and configuring power-saving for Ubuntu on Mi Notebook Air 13.3
+This article contains instructions for installing and configuring power-saving for Ubuntu 16.04 on Mi Notebook Air 13.3
 ***
 * Before installing the system, we will need an Internet connection
 ```
@@ -51,7 +51,7 @@ sudo ‐i
 echo 5 > /proc/sys/vm/laptop_mode
 exit 
 ```
-* After installing Nvidia-driver, use `prime-select` to choose the intel graphics as prime. 
+* After installing Nvidia-driver, we can use `prime-select` to choose the intel graphics as prime. 
 * Immediately check the result...
 ```
 sudo prime‐select intel 
@@ -59,7 +59,7 @@ sudo prime‐select query
 ```
 * Done
 ***
-### Some of the features that will help you with powersave
+### Some features that will help you with powersave
 * Use this command to check the power consumption of your laptop...
 ```
 upower -d
@@ -71,9 +71,15 @@ sudo powetop
 ```
 * **TLP** (Linux Advanced Power Management) - a very useful utility
 ```
-installing and configuring the **TLP** I will describe in another article
+installing and configuring the TLP I will describe in another article
 ```
 * The use of **Nvidia Optimus Technology** also has a positive effect on energy saving
 ```
-installing and configuring the **Bumblebee** I will describe in another article
+[Install and configurate Bumblebee](https://github.com/andrewozhegov/mi-air-13-ubuntu/blob/master/bumblebees.md)
+```
+***
+### Some features too
+* Mi Air 13 has 8 gb of RAM, and you can safely disable the swap partition
+```
+sudo swapoff -a
 ```
