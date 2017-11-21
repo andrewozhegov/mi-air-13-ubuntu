@@ -66,3 +66,40 @@ Bumblebee status: Ready (3.2.1). X inactive. Discrete video card is on.
 ```
 sudo service bumblebeed start
 ```
+***
+### If after waking up from suspend or hibernation `optirun --status` will show...
+```
+Bumblebee status: Ready (3.2.1). X inactive. Discrete video card is on.
+
+```
+* Discrete graphics works but does nothing. This problem can be fixed by running anything with `optirun`. For example...
+```
+optirun glxgeras
+optirun --status
+```
+* Let's create a service file that would do something like that.
+```
+sudo nano /etc/systemd/system/start-optirun.service
+```
+* Complete the file with this text...
+```
+[Unit]
+Description=Run optirun at resume
+After=suspend.target
+After=hibernate.target
+After=hybrid-sleep.target
+
+[Service]
+ExecStart=/usr/bin/optirun ping -c 5 8.8.8.8 &> /dev/null
+
+[Install]
+WantedBy=suspend.target
+WantedBy=hibernate.target
+WantedBy=hybrid-sleep.target
+```
+* Use `Ctrl + o` to save file and `Ctrl + x` to exit the `nano`.
+* Now it only remains to enable this script by...
+```
+systemctl enable start-optirun
+```
+* Done
