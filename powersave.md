@@ -35,17 +35,18 @@ sudo apt dist‐upgrade
 ```
 sudo update-initramfs -u
 ```
-* I have this warning...
-```
-W: Possible missing firmware /lib/firmware/i915/kbl_dmc_ver1_01.bin for module i915
-```
-* Let's fix this warning...
-```
-cd /tmp
-wget https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/i915/kbl_dmc_ver1_01.bin
-sudo cp /tmp/kbl_dmc_ver1_01.bin /lib/firmware/i915/kbl_dmc_ver1_01.bin 
-sudo update-initramfs -k $(uname -r) -u
-```
+> ### IN UBUNTU 16.04.3 THIS WARRING BEEN FIXED
+> * I have this warning...
+> ```
+> W: Possible missing firmware /lib/firmware/i915/kbl_dmc_ver1_01.bin for module i915
+> ```
+> * Let's fix this warning...
+> ```
+> cd /tmp
+> wget https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/i915/kbl_dmc_ver1_01.bin
+> sudo cp /tmp/kbl_dmc_ver1_01.bin /lib/firmware/i915/kbl_dmc_ver1_01.bin 
+> sudo update-initramfs -k $(uname -r) -u
+> ```
 * Goog! Let's activate Laptop Mode
 ```
 sudo ‐i 
