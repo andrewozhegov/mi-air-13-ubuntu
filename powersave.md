@@ -1,24 +1,25 @@
 # Install Ubuntu and Powersave settings
 This article contains instructions for installing and configuring power-saving for Ubuntu 16.04 on Mi Notebook Air 13.3
 ***
-* Before installing the system, we will need an Internet connection
-```
-sudo modprobe ‐r acer_wmi 
-sudo service network‐manager restart 
-```
-* Installing Ubuntu...
-* Reboot...
-* After rebooting, again you will need to treat wi-fi
-```
-sudo modprobe ‐r acer_wmi 
-sudo service network‐manager restart
-```
-* We don't have to repeat it ad infinitum, so...
-```
-sudo ‐i 
-echo 'blacklist acer_wmi' >> /etc/modprobe.d/blacklist.conf 
-exit
-```
+> ### IN UBUNTU 16.04.3 THIS BUG BEEN FIXED
+> * Before installing the system, we will need an Internet connection
+> ```
+> sudo modprobe ‐r acer_wmi 
+> sudo service network‐manager restart 
+> ```
+> * Installing Ubuntu...
+> * Reboot...
+> * After rebooting, again you will need to treat wi-fi
+> ```
+> sudo modprobe ‐r acer_wmi 
+> sudo service network‐manager restart
+> ```
+> * We don't have to repeat it ad infinitum, so...
+> ```
+> sudo ‐i 
+> echo 'blacklist acer_wmi' >> /etc/modprobe.d/blacklist.conf 
+> exit
+> ```
 * Ok, now we need to install the driver for Nvidia discrete graphics. Start by adding the repository
 ```
 sudo add‐apt‐repository ppa:graphics‐drivers/ppa 
