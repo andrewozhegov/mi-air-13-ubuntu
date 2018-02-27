@@ -13,7 +13,7 @@ sudo apt-get install redshift-gtk
 
 ### Configuring
 Before run this tool we need to configure it
-* You also can copy ![my config](https://github.com/andrewozhegov/mi-air-13-ubuntu/blob/master/redshift/redshift.conf) by this comand
+* You also can copy [my config](https://github.com/andrewozhegov/mi-air-13-ubuntu/blob/master/redshift/redshift.conf) by this comand
 ```
 wget -P ~/.config/ https://raw.githubusercontent.com/andrewozhegov/mi-air-13-ubuntu/master/redshift/redshift.conf
 ```
