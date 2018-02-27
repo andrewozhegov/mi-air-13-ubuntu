@@ -9,3 +9,6 @@ Some useful info about Mi Notebook Air 13.3 and Ubuntu 16.04
 
 * #### [Recover system with Live-USB](https://github.com/andrewozhegov/mi-air-13-ubuntu/blob/master/liveusb-recover.md)
 > How to recover inoperable system after installing/removing some packages
+
+* #### [Installing and configurate Redshift](https://github.com/andrewozhegov/mi-air-13-ubuntu/blob/master/redshift/redshift.md)
+> This tool will adjust the screen temperature depending on the time of day
