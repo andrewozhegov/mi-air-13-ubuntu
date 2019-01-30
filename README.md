@@ -12,3 +12,7 @@ Some useful info about Mi Notebook Air 13.3 and Ubuntu 16.04
 
 * #### [Installing and configurate Redshift](https://github.com/andrewozhegov/mi-air-13-ubuntu/blob/master/redshift/redshift.md)
 > This tool will adjust the screen temperature depending on the time of day
+
+* #### [Powerline install script](https://github.com/andrewozhegov/mi-air-13-ubuntu/blob/master/powerline/powerline.md)
+> A simple shell script that will install powerline for bash, vim & tmux
+
