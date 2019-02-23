@@ -31,7 +31,7 @@ POWERLINE_BASH_SELECT=1
 " >> $HOMEDIR/.bashrc
 }
 
-vimrc_upd ()
+tmuxconf_upd ()
 {
     echo "
 source $POWERLINE_PATH/tmux/powerline.conf
@@ -39,7 +39,7 @@ set-option -g default-terminal screen-256color
 " >> $HOMEDIR/.tmux.conf
 }
 
-tmuxconf_upd ()
+vimrc_upd ()
 {
     echo "
 set rtp+=$POWERLINE_PATH/vim/
