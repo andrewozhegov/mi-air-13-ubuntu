@@ -8,6 +8,7 @@ DB_DONE="$(dirname `readlink -e "$0"`)/done.db"
 DB_QUEUE="$(dirname `readlink -e "$0"`)/queue.db"
 TIMESPAN=300
 INVOLVED_WORDS_N=20
+PRIORITY_MAX=20
 
 function ask_word
 {
@@ -23,10 +24,16 @@ function get_priority
     echo $( awk 'NR == '$1' {print $1}' "${DB}" )
 }
 
+function set_priority
+{
+    local PRIORITY_N=`get_priority "$1"`
+    sed -i ''$1's/'$PRIORITY_N'/'$2'/' "${DB}"
+}
+
 function increase_priority
 {
     local PRIORITY_N=`get_priority "$1"`
-    sed -i ''$1's/'$PRIORITY_N'/'`expr $PRIORITY_N + $2`'/' "${DB}"
+    set_priority "$1" "`expr $PRIORITY_N + $2`"
 }
 
 function add_from_queue
@@ -56,6 +63,7 @@ do
 
     for ((N=1, PRIORITY_N=0, PRIORITY_FULL=0; N <= ${WORDS_COUNT}; N++)) ; do
         PRIORITY_N=`get_priority "$N"`
+        [ "$PRIORITY_N" -gt "$PRIORITY_MAX" ] && set_priority "$N" "$PRIORITY_MAX"
         PRIORITY_FULL=`expr $PRIORITY_FULL + $PRIORITY_N`
         [ "$RAND" -le "$PRIORITY_FULL" ] && break
     done
