@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#exec &>/dev/null
 exec &>"$(dirname `readlink -e "$0"`)/words.log"
 set -x
 
@@ -40,8 +39,8 @@ function update_conf
 {
     while true ; do
         WORDS_COUNT="$( wc -l "${DB}" | awk '{print $1}' )"
-        add_from_queue
         [ "$WORDS_COUNT" -ge "$INVOLVED_WORDS_N" ] && break
+        add_from_queue
     done
 
     VALUES_SUM="$( cat "${DB}" | awk '{sum += $1} END {print sum}' )"
