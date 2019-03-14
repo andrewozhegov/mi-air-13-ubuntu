@@ -3,7 +3,6 @@
 exec &>"$(dirname `readlink -e "$0"`)/words.log"
 set -x
 
-DB="$(dirname `readlink -e "$0"`)/words.db"
 DB_DONE="$(dirname `readlink -e "$0"`)/done.db"
 DB_QUEUE="$(dirname `readlink -e "$0"`)/queue.db"
 TIMESPAN=300
@@ -44,6 +43,10 @@ function add_from_queue
 
 function update_conf
 {
+    WEEK_DAY="$(date +%a | tr [:upper:] [:lower:])"
+    DB="$(dirname `readlink -e "$0"`)/words_${WEEK_DAY}.db"
+    [ ! -f "${DB}" ] && touch "${DB}"
+
     while true ; do
         WORDS_COUNT="$( wc -l "${DB}" | awk '{print $1}' )"
         [ "$WORDS_COUNT" -ge "$INVOLVED_WORDS_N" ] && break
