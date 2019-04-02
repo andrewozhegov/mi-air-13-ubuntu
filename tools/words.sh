@@ -6,7 +6,7 @@ set -x
 DB_DONE="$(dirname `readlink -e "$0"`)/done.db"
 DB_QUEUE="$(dirname `readlink -e "$0"`)/queue.db"
 TIMESPAN=300
-INVOLVED_WORDS_N=20
+INVOLVED_WORDS_N=10
 PRIORITY_MAX=20
 
 function ask_word
@@ -35,8 +35,14 @@ function increase_priority
     set_priority "$1" "`expr $PRIORITY_N + $2`"
 }
 
+function words_count
+{
+    echo `wc -l "$1" | awk '{print $1}'`
+}
+
 function add_from_queue
 {
+    [ `words_count "$DB_QUEUE"` -eq 0 ] && return 1
     cat "${DB_QUEUE}" | awk 'NR == 1' >> ${DB}
     sed -i '1d' "${DB_QUEUE}"
 }
@@ -48,9 +54,9 @@ function update_conf
     [ ! -f "${DB}" ] && touch "${DB}"
 
     while true ; do
-        WORDS_COUNT="$( wc -l "${DB}" | awk '{print $1}' )"
+        WORDS_COUNT="`words_count "${DB}"`"
         [ "$WORDS_COUNT" -ge "$INVOLVED_WORDS_N" ] && break
-        add_from_queue
+        add_from_queue || break
     done
 
     VALUES_SUM="$( cat "${DB}" | awk '{sum += $1} END {print sum}' )"
@@ -78,5 +84,5 @@ do
             sed -i ''$N'd' "${DB}"
         }
         sleep "$TIMESPAN"
-    } || increase_priority "$N" "4"
+    } || increase_priority "$N" "2"
 done
