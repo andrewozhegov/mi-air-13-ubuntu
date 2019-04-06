@@ -16,10 +16,13 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'wincent/command-t'
 Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 " Development tools
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'sgur/vim-gitgutter'
 
 call vundle#end()
 filetype plugin indent on
