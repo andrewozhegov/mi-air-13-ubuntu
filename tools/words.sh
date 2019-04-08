@@ -15,7 +15,10 @@ function ask_word
     ANSW="$( awk 'NR == '$1' {print $3}' "${DB}" )"
 
     [ `expr "$RANDOM" % 2` -eq 0 ] && read WORD ANSW <<<"$ANSW $WORD"
-    [ "${ANSW}" == "$(kdialog --inputbox "Translate '$WORD':")" ]
+    [ "${ANSW}" == "$(kdialog --inputbox "Translate '$WORD':")" ] || {
+        notify-send "Right answer is '${ANSW}'"
+        return 1 
+    }
 }
 
 function get_priority
