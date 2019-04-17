@@ -9,10 +9,22 @@ TIMESPAN=300
 INVOLVED_WORDS_N=10
 PRIORITY_MAX=20
 
+function get_from_line { echo $( awk 'NR == '$1' {print $'$2'}' "${DB}" ); }
+
+function get_priority { echo `get_from_line $1 1`; }
+function get_word     { echo `get_from_line $1 2`; }
+function get_answer   { echo `get_from_line $1 3`; }
+
+function set_priority
+{
+    local PRIORITY_N=`get_priority "$1"`
+    sed -i ''$1's/'$PRIORITY_N'/'$2'/' "${DB}"
+}
+
 function ask_word
 {
-    WORD="$( awk 'NR == '$1' {print $2}' "${DB}" )"
-    ANSW="$( awk 'NR == '$1' {print $3}' "${DB}" )"
+    WORD=`get_word $1`
+    ANSW=`get_answer $1`
 
     [ `expr "$RANDOM" % 2` -eq 0 ] && read WORD ANSW <<<"$ANSW $WORD"
     [ "${ANSW}" == "$(kdialog --inputbox "Translate '$WORD':")" ] || {
@@ -21,33 +33,22 @@ function ask_word
     }
 }
 
-function get_priority
-{
-    echo $( awk 'NR == '$1' {print $1}' "${DB}" )
-}
-
-function set_priority
-{
-    local PRIORITY_N=`get_priority "$1"`
-    sed -i ''$1's/'$PRIORITY_N'/'$2'/' "${DB}"
-}
-
 function increase_priority
 {
     local PRIORITY_N=`get_priority "$1"`
     set_priority "$1" "`expr $PRIORITY_N + $2`"
 }
 
-function words_count
-{
-    echo `wc -l "$1" | awk '{print $1}'`
-}
+function words_count { echo `wc -l "$1" | awk '{print $1}'`; }
 
 function add_from_queue
 {
-    [ `words_count "$DB_QUEUE"` -eq 0 ] && return 1
+    [ `words_count "${DB_QUEUE}"` -eq 0 ] && return 1
     cat "${DB_QUEUE}" | awk 'NR == 1' >> ${DB}
     sed -i '1d' "${DB_QUEUE}"
+
+    NEWLINE_N=`words_count "${DB}"`
+    notify-send "New word '`get_word ${NEWLINE_N}`' transtaled as '`get_answer ${NEWLINE_N}`'"
 }
 
 function update_conf
