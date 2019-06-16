@@ -74,13 +74,13 @@ for arg in "$@"; do
             $HOMEDIR="$1"
 	        shift 1 ;;
         --bash|-b)
-            [ "$BASH_DONE" -eq "1" ] || bashrc_upd && $BASH_DONE=1
+            [ "$BASH_DONE" == "1" ] || bashrc_upd && BASH_DONE=1
 	        shift 1 ;;
         --vim|-v)
-            [ "$VIM_DONE" -eq "1" ] || vimrc_upd && $VIM_DONE=1
+            [ "$VIM_DONE" == "1" ] || vimrc_upd && VIM_DONE=1
             shift 1 ;;
         --tmux|-t)
-            [ "$TMUX_DONE" -eq "1" ] || tmuxconf_upd && $TMUX_DONE=1
+            [ "$TMUX_DONE" == "1" ] || tmuxconf_upd && TMUX_DONE=1
             shift 1 ;;
      esac
 done
