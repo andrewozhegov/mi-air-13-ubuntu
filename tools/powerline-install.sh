@@ -53,7 +53,7 @@ HOMEDIR="$HOME"
 TEMPDIR="$(mktemp -d)" && cd $TEMPDIR
 
 apt update
-apt install python3 python3-pip git vim tmux
+apt install -y python3 python3-pip git vim tmux
 pip3 install git+git://github.com/Lokaltog/powerline
 
 wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
