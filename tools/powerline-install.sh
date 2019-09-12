@@ -15,7 +15,9 @@ Args:
     --help | -h		See this message
     --bash | -b		Install powerline for Bash (update .bashrc)
     --tmux | -t		Install powerline for tmux (update .tmux.conf)
-    --vim  | -v		Install powerline for VIM (update .vimrc)
+
+    --vim  | -v   <out dir/file>
+        Install powerline for VIM (.vimrc by default)
 EOF
 }
 
@@ -42,11 +44,13 @@ set-option -g default-terminal screen-256color
 vimrc_upd ()
 {
     echo "
+\" Poweline support settings
+
 set rtp+=$POWERLINE_PATH/vim/
 set laststatus=2
 set showtabline=1
 set t_Co=256
-" >> $HOMEDIR/.vimrc
+" >> "${1:-$HOMEDIR/.vimrc}"
 }
 
 HOMEDIR="$HOME"
@@ -61,6 +65,8 @@ wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbol
 
 mv PowerlineSymbols.otf /usr/share/fonts/
 mv 10-powerline-symbols.conf /etc/fonts/conf.d/
+
+cd -
 
 fc-cache -vf /usr/share/fonts/
 
@@ -77,7 +83,15 @@ for arg in "$@"; do
             [ "$BASH_DONE" == "1" ] || bashrc_upd && BASH_DONE=1
 	        shift 1 ;;
         --vim|-v)
-            [ "$VIM_DONE" == "1" ] || vimrc_upd && VIM_DONE=1
+            [ "$VIM_DONE" == "1" ] || {
+                output_path="$(realpath -q "$2" 2>/dev/null)" && {
+                    if [ -d "$output_path" ] ; then
+                        vimrc_upd "$output_path/powerline.vim"
+                    elif [ -d "$(dirname "$output_path")" ] ; then
+                        vimrc_upd "$output_path"
+                    fi ; shift 1
+                } || vimrc_upd && VIM_DONE=1
+            }
             shift 1 ;;
         --tmux|-t)
             [ "$TMUX_DONE" == "1" ] || tmuxconf_upd && TMUX_DONE=1
