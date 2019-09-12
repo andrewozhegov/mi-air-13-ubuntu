@@ -1,10 +1,13 @@
 #!/bin/bash
 
-exec &>"$(dirname `readlink -e "$0"`)/words.log"
+CURRDIR="$(dirname `readlink -e "$0"`)"
+WORKDIR=${1:-$CURRDIR}
+
+exec &>"${WORKDIR}/words.log"
 set -x
 
-DB_DONE="$(dirname `readlink -e "$0"`)/done.db"
-DB_QUEUE="$(dirname `readlink -e "$0"`)/queue.db"
+DB_DONE="${WORKDIR}/done.db"
+DB_QUEUE="${WORKDIR}/queue.db"
 TIMESPAN=300
 INVOLVED_WORDS_N=10
 PRIORITY_MAX=20
@@ -54,7 +57,7 @@ function add_from_queue
 function update_conf
 {
     WEEK_DAY="$(date +%a | tr [:upper:] [:lower:])"
-    DB="$(dirname `readlink -e "$0"`)/words_${WEEK_DAY}.db"
+    DB="${WORKDIR}/words_${WEEK_DAY}.db"
     [ ! -f "${DB}" ] && touch "${DB}"
 
     while true ; do
