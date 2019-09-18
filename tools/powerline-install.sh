@@ -23,34 +23,35 @@ EOF
 
 bashrc_upd ()
 {
-    echo "
+    cat <<EOF >> "${1:-$HOMEDIR/.bashrc}"
 # Powerline support for bash
+
 export TERM="xterm-256color"
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 . $POWERLINE_PATH/bash/powerline.sh
-" >> $HOMEDIR/.bashrc
+EOF
 }
 
 tmuxconf_upd ()
 {
-    echo "
+    cat <<EOF >> "${1:-$HOMEDIR/.tmux.conf}"
 source $POWERLINE_PATH/tmux/powerline.conf
 set-option -g default-terminal screen-256color
-" >> $HOMEDIR/.tmux.conf
+EOF 
 }
 
 vimrc_upd ()
 {
-    echo "
+    cat <<EOF >> "${1:-$HOMEDIR/.vimrc}"
 \" Poweline support settings
 
 set rtp+=$POWERLINE_PATH/vim/
 set laststatus=2
 set showtabline=1
 set t_Co=256
-" >> "${1:-$HOMEDIR/.vimrc}"
+EOF
 }
 
 HOMEDIR="$HOME"
